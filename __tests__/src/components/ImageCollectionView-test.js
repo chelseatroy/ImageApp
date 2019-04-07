@@ -13,6 +13,9 @@ let instance: TestRenderer.ReactTestInstance;
 beforeAll(() => {
   renderer = TestRenderer.create( <ImageCollectionView /> );
   instance = renderer.root;
+});
+
+test( 'ImageCollectionView renders a collection of images', () => {
   fetch.mockResponseOnce(
     JSON.stringify({
     'results': [
@@ -40,10 +43,27 @@ beforeAll(() => {
          ],
     })
   );
-});
 
-test( 'ImageCollectionView renders a collection of images', () => {
    expect(instance.findAllByType(FlatList).length).toBe(1)
    expect(instance.findAllByType(Text).length).toBe(3)
 });
 
+test( 'ImageCollectionView renders a collection of images', () => {
+  fetch.mockResponseOnce(
+    JSON.stringify({
+    'results': [],
+    })
+  );
+
+   expect(instance.findByType(Alert).findByType(Text).children).toBe(["Sorry — we can't find any images of that! Please try another search term."])
+});
+
+test( 'ImageCollectionView renders a collection of images', () => {
+  fetch.mockResponseOnce(
+    JSON.stringify({
+    'results': [],
+    })
+  );
+
+   expect(instance.findByType(Alert).findByType(Text).children).toBe(["Sorry — we're having trouble searching right now. Please try again later."])
+});
