@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, FlatList, TextInput} from 'react-native';
+import {Platform, StyleSheet, Text, View, FlatList, TextInput, SafeAreaView} from 'react-native';
 
 import ImageCollectionView from './src/components/ImageCollectionView';
 import { UNSPLASH_API_KEY } from './secrets'
@@ -10,6 +10,9 @@ export default class App extends Component<Props> {
   constructor(props) {
     super(props)
     this.collectionElement = React.createRef()
+    this.state = {
+        input: "",
+    }
   }
 
   search(term) {
@@ -22,26 +25,34 @@ export default class App extends Component<Props> {
   }
 
   searchTermChanged = (text) => {
-    console.log("ONE TWO THREE FOUR");
+    this.setState({input: text})
     this.collectionElement.current.refreshSearchTerm(text);
   }
 
   render() {
     return (
-       <View style={styles.container}>
-        <Text style={styles.title}>Welcome to Image Browser!</Text>
-        <Text style={styles.description}>We've selected some lovely plants to get you started, but you can search for any kind of image you like.</Text>
-        <TextInput style={styles.searchBar}
-                placeholder="Type your image search terms..."
-                onChangeText={console.log("AYYYYYY")}
-              />
-        <ImageCollectionView ref={this.collectionElement} collection={this.search}/>
-       </View>
+        <SafeAreaView style={styles.safeArea}>
+
+           <View style={styles.container}>
+                <Text style={styles.title}>Welcome to Image Browser!</Text>
+                <Text style={styles.description}>We've selected some lovely plants to get you started, but you can search for any kind of image you like.</Text>
+                <TextInput style={styles.searchBar}
+                        placeholder="Type your image search terms..."
+                        onChangeText={this.searchTermChanged}
+                        value={this.state.input}
+                      />
+                <ImageCollectionView ref={this.collectionElement} collection={this.search}/>
+           </View>
+        </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+   flex: 1,
+   backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -63,6 +74,7 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     backgroundColor: '#FFFFFF',
+    padding: 6,
     borderColor: '#228B22',
     borderWidth: 2,
     marginLeft: 5,

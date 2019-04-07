@@ -12,26 +12,26 @@ class ImageCollectionView extends Component {
   }
 
   componentDidMount() {
-    return this.props.collection(this.state.searchTerm)
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({
-        isLoading: false,
-        data: responseJson.results,
-      }, function(){
-
-      });
-    })
-    .catch((error) =>{
-      console.error(error);
-    });
+    this.refreshSearchTerm(this.state.searchTerm)
   }
 
-  refreshSearchTerm(newTerm){
+  refreshSearchTerm = (newTerm) => {
       this.setState({
           searchTerm: newTerm
       })
       this.props.collection(this.state.searchTerm)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          isLoading: false,
+          data: responseJson.results,
+        }, function(){
+
+        });
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
   }
 
   renderItem = ({ item, index }) => {

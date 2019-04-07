@@ -5,7 +5,7 @@ import { FlatList, View, Text } from 'react-native';
 
 import * as TestRenderer from 'react-test-renderer';
 
-import ImageCollectionView from './ImageCollectionView';
+import ImageCollectionView from '../../../src/components/ImageCollectionView';
 
 let renderer: TestRenderer.ReactTestRenderer;
 let instance: TestRenderer.ReactTestInstance;
@@ -48,7 +48,7 @@ test( 'ImageCollectionView renders a collection of images', () => {
    expect(instance.findAllByType(Text).length).toBe(3)
 });
 
-test( 'ImageCollectionView renders a collection of images', () => {
+test( 'ImageCollectionView renders an alert in the case of no images', () => {
   fetch.mockResponseOnce(
     JSON.stringify({
     'results': [],
@@ -58,7 +58,7 @@ test( 'ImageCollectionView renders a collection of images', () => {
    expect(instance.findByType(Alert).findByType(Text).children).toBe(["Sorry — we can't find any images of that! Please try another search term."])
 });
 
-test( 'ImageCollectionView renders a collection of images', () => {
+test( 'ImageCollectionView renders an alert in the case of a network issue', () => {
   fetch.mockResponseOnce(
     JSON.stringify({
     'results': [],
