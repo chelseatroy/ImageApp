@@ -1,9 +1,13 @@
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, FlatList, TextInput, SafeAreaView} from 'react-native';
+import React, { Component } from 'react';
+import {
+    Text,
+    View,
+    TextInput,
+    SafeAreaView
+} from 'react-native';
 
 import ImageCollectionView from './src/components/ImageCollectionView';
-import { UNSPLASH_API_KEY } from './secrets'
-
+import { mainScreenStyles } from './src/styles/mainScreen'
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -15,15 +19,6 @@ export default class App extends Component<Props> {
     }
   }
 
-  search(term) {
-      encodedTerm = encodeURI(term)
-      return fetch('https://api.unsplash.com/search/photos?page=1&per_page=20&query=' + encodedTerm,
-             { headers: {
-                  'Authorization' : 'Client-ID ' + UNSPLASH_API_KEY
-                  }
-             })
-  }
-
   searchTermChanged = (text) => {
     this.setState({input: text})
     this.collectionElement.current.refreshSearchTerm(text);
@@ -31,54 +26,19 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={mainScreenStyles.safeArea}>
 
-           <View style={styles.container}>
-                <Text style={styles.title}>Welcome to Image Browser!</Text>
-                <Text style={styles.description}>We've selected some lovely plants to get you started, but you can search for any kind of image you like.</Text>
-                <TextInput style={styles.searchBar}
+           <View style={mainScreenStyles.container}>
+                <Text style={mainScreenStyles.title}>Welcome to Image Browser!</Text>
+                <Text style={mainScreenStyles.description}>We've selected some lovely plants to get you started, but you can search for any kind of image you like.</Text>
+                <TextInput style={mainScreenStyles.searchBar}
                         placeholder="Type your image search terms..."
                         onChangeText={this.searchTermChanged}
                         value={this.state.input}
                       />
-                <ImageCollectionView ref={this.collectionElement} collection={this.search}/>
+                <ImageCollectionView ref={this.collectionElement}/>
            </View>
         </SafeAreaView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-   flex: 1,
-   backgroundColor: '#fff',
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    margin: 5
-  },
-  title: {
-    fontSize: 24,
-    textAlign: 'center',
-    color: '#228B22',
-    padding: 3,
-  },
-  description: {
-    alignItems: 'center',
-    fontSize: 16,
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 5,
-    marginRight: 5,
-  },
-  searchBar: {
-    backgroundColor: '#FFFFFF',
-    padding: 6,
-    borderColor: '#228B22',
-    borderWidth: 2,
-    marginLeft: 5,
-    marginRight: 5,
-    borderRadius: 5
-  }
-});

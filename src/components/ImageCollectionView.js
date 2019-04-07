@@ -1,5 +1,16 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, FlatList, Dimensions, ActivityIndicator, Image } from 'react-native';
+import {
+    Text,
+    View,
+    FlatList,
+    Dimensions,
+    ActivityIndicator,
+    Image
+} from 'react-native';
+
+import { search } from '../services/getImageCollection';
+import { imageCollectionStyles } from '../styles/imageCollection'
+
 
 class ImageCollectionView extends Component {
   constructor(props) {
@@ -21,7 +32,7 @@ class ImageCollectionView extends Component {
           isLoading: true,
           data: [],
         })
-      this.props.collection(this.state.searchTerm)
+      search(this.state.searchTerm)
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
@@ -43,13 +54,13 @@ class ImageCollectionView extends Component {
 
   renderItem = ({ item, index }) => {
     if (item.empty === true) {
-      return <View style={[styles.item, styles.hidden]} />;
+      return <View style={[imageCollectionStyles.item, imageCollectionStyles.hidden]} />;
     }
     return (
-      <View style={styles.item}>
-        <Text style={styles.itemText}>{item.alt_description}</Text>
+      <View style={imageCollectionStyles.item}>
+        <Text style={imageCollectionStyles.itemText}>{item.alt_description}</Text>
         <Image
-          style={[styles.image,
+          style={[imageCollectionStyles.image,
             {
                 width: (Dimensions.get('window').width / columnCount) - 20,
                 height: item.height * (((Dimensions.get('window').width / columnCount) - 20))/item.width
@@ -64,14 +75,14 @@ class ImageCollectionView extends Component {
   render() {
     if(this.state.isLoading){
       return(
-        <View style={styles.activityIndicator}>
+        <View style={imageCollectionStyles.activityIndicator}>
           <ActivityIndicator/>
         </View>
       )
     } else if (this.state.data.length == 0) {
         return(
-        <View style={styles.item}>
-            <Text style={styles.emptyResultsText}>It looks like we don't have any images that match your description. Try a different search term.</Text>
+        <View style={imageCollectionStyles.item}>
+            <Text style={imageCollectionStyles.emptyResultsText}>It looks like we don't have any images that match your description. Try a different search term.</Text>
         </View>
     )
     }
@@ -79,7 +90,7 @@ class ImageCollectionView extends Component {
     return (
       <FlatList
         data={layoutCollection(this.state.data, columnCount)}
-        style={styles.container}
+        style={imageCollectionStyles.collectionItemContainer}
         renderItem={this.renderItem}
         numColumns={columnCount}
       />
@@ -103,44 +114,5 @@ const layoutCollection = (data, columnCount) => {
 
   return data;
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginVertical: 20,
-    backgroundColor: '#FFFFFF',
-  },
-  item: {
-    borderRadius: 10,
-    backgroundColor: '#32CD3270',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    margin: 4,
-    padding: 5,
-  },
-  itemText: {
-    fontSize: 16,
-    color: '#228B22',
-  },
-  emptyResultsText: {
-      fontSize: 16,
-      color: '#228B22',
-      alignItems: 'center',
-  },
-  hidden: {
-    backgroundColor: 'transparent',
-  },
-  activityIndicator: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-  },
-  image: {
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#FFFFFF',
-  }
-});
 
 export default ImageCollectionView;
