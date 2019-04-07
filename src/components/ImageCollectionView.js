@@ -17,8 +17,10 @@ class ImageCollectionView extends Component {
 
   refreshSearchTerm = (newTerm) => {
       this.setState({
-          searchTerm: newTerm
-      })
+          searchTerm: newTerm,
+          isLoading: true,
+          data: [],
+        })
       this.props.collection(this.state.searchTerm)
       .then((response) => response.json())
       .then((responseJson) => {
@@ -31,6 +33,11 @@ class ImageCollectionView extends Component {
       })
       .catch((error) =>{
         console.error(error);
+        Alert.alert(
+            'Oops! Something went wrong',
+            'Sorry, there appears to be an issue. Please check your network connection, or try again later.',
+            [{text: 'OK', onPress: () => console.log('Network Error detected on a device: ' + error.message)}, ],
+        );
       });
   }
 
@@ -61,6 +68,12 @@ class ImageCollectionView extends Component {
           <ActivityIndicator/>
         </View>
       )
+    } else if (this.state.data.length == 0) {
+        return(
+        <View style={styles.item}>
+            <Text style={styles.emptyResultsText}>It looks like we don't have any images that match your description. Try a different search term.</Text>
+        </View>
+    )
     }
 
     return (
@@ -109,6 +122,11 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 16,
     color: '#228B22',
+  },
+  emptyResultsText: {
+      fontSize: 16,
+      color: '#228B22',
+      alignItems: 'center',
   },
   hidden: {
     backgroundColor: 'transparent',

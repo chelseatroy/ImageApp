@@ -55,7 +55,7 @@ test( 'ImageCollectionView renders an alert in the case of no images', () => {
     })
   );
 
-   expect(instance.findByType(Alert).findByType(Text).children).toBe(["Sorry — we can't find any images of that! Please try another search term."])
+   expect(instance.findByType(Alert).findByProps({className: "emptyResultsText"}).children).toContain(["It looks like we don't have any images that match your description. Try a different search term."])
 });
 
 test( 'ImageCollectionView renders an alert in the case of a network issue', () => {
@@ -65,5 +65,8 @@ test( 'ImageCollectionView renders an alert in the case of a network issue', () 
     })
   );
 
-   expect(instance.findByType(Alert).findByType(Text).children).toBe(["Sorry — we're having trouble searching right now. Please try again later."])
+   expect(instance.findByType(Alert).findByType(Text).children).toContain([
+       'Oops! Something went wrong',
+       'Sorry, there appears to be an issue. Please check your network connection, or try again later.',
+   ])
 });
