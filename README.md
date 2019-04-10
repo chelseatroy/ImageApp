@@ -20,6 +20,11 @@ Since this was a very limited-scope project, I included no additional dependenci
 - Testing: Having `shallow` from `enzyme` helps a lot with component testing when components hook up directly to network requests. I use native testing elements for this for now
 - Currently no separate component for individual collection views. If they got any more complicated than they are right now, I'd probably extract that out.
 
+## Conventions and Issues
+- My capitalization convention might look unfamiliar. I use CapitalCamelCase for files that export items with _mutable state_. I use lowerCamelCase for files that export functions or items with _immutable state_ (like style classes).
+- When you run the tests, you'll get a warning that one of the test files contains no tests. That's because I put `fixtures.js` in the test directory so I would have some test data to mock out the API and check that my view looked right. I'd look more into this under different time circumstances, but it wasn't blocking, so I left it for now. I'd love to hear your thoughts on how to remediate this!
+- For some reason, if I remove the blank line under the `<SafeAreaView>` opening tag, the app has issues. I looked into this for a little while, but did not figure it out. If you happen to know, I'd love to hear it! 
+
 ## Known issue with images
 Sometimes the results for a given search are...weird. 
 
