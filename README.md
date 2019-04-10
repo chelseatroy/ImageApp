@@ -13,7 +13,7 @@ Should be fairly intuitive. If it isn't, my UI is not good :)
 But for clarity, one can search for images with the bar at the top, then scroll through the results below.
 
 ## Dependencies
-Since this was a very limited-scope project, I included no additional dependencies like redux, mobx, axios, or enzyme. This creates some limitations which are worth noting:
+Since this was a very limited-scope project, I included no additional dependencies like `redux`, `mobx`, `axios`, or `enzyme`. This creates some limitations which are worth noting:
 
 - The `fetch` library is known to have some issues surrounding handling bad HTTP requests. I'd probably switch to something else in a larger scope app for the sake of that reliability.
 - Very little state management: state amounts only to the images we just searched for, and it lives in the collection component
@@ -21,7 +21,7 @@ Since this was a very limited-scope project, I included no additional dependenci
 - Currently no separate component for individual collection views. If they got any more complicated than they are right now, I'd probably extract that out.
 
 ## Conventions and Issues
-- My capitalization convention might look unfamiliar. I use CapitalCamelCase for files that export items with _mutable state_. I use lowerCamelCase for files that export functions or items with _immutable state_ (like style classes).
+- My capitalization convention might look unfamiliar. I use `CapitalCamelCase` for files that export items with _mutable state_. I use `lowerCamelCase` for files that export functions or items with _immutable state_ (like style classes).
 - When you run the tests, you'll get a warning that one of the test files contains no tests. That's because I put `fixtures.js` in the test directory so I would have some test data to mock out the API and check that my view looked right. I'd look more into this under different time circumstances, but it wasn't blocking, so I left it for now. I'd love to hear your thoughts on how to remediate this!
 - For some reason, if I remove the blank line under the `<SafeAreaView>` opening tag, the app has issues. I looked into this for a little while, but did not figure it out. If you happen to know, I'd love to hear it! 
 
