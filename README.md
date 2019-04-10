@@ -16,8 +16,9 @@ But for clarity, one can search for images with the bar at the top, then scroll 
 Since this was a very limited-scope project, I included no additional dependencies like redux, mobx, axios, or enzyme. This creates some limitations which are worth noting:
 
 - The `fetch` library is known to have some issues surrounding handling bad HTTP requests. I'd probably switch to something else in a larger scope app for the sake of that reliability.
-- Very little state management: state amounts only to the images we just searched for, and it lives in the list component
+- Very little state management: state amounts only to the images we just searched for, and it lives in the collection component
 - Testing: Having `shallow` from `enzyme` helps a lot with component testing when components hook up directly to network requests. I use native testing elements for this for now
+- Currently no separate component for individual collection views. If they got any more complicated than they are right now, I'd probably extract that out.
 
 ## Known issue with images
 Sometimes the results for a given search are...weird. 
