@@ -39,9 +39,15 @@ The Unsplash API requires an API key. I figured your plan to test this app would
 I considered standing up a server for this app to make a request to for the API key. I set up a mocky endpoint to hand over the key, but I still felt weird about that—anyone could look at the repo, find the mocky URL, go to that URL, and get the API key.
 
 To put the key behind authentication would have required standing up a little server instead of using Mocky. Since implementing auth didn't quite fit in the 3 hour time frame for this app,
-I insteaed kept the API key in a `secrets.js` file, which I'll e-mail to Laura. To get this app to work, you'll need to insert that file at the root of the project (that is, under `ImageApp`).
+I instead kept the API key in a `secrets.js` file. To get this app to work, you'll need to insert that file. Steps:
 
-IMPORTANT: The API Key only allows for 50 requests per hour. So, as fun as it is to search for images, please keep it under that so my key doesn't get revoked :)
+1. Get an API hey [from here](https://unsplash.com/developers).
+1. Make a file called `secrets.js` at the root of the project (that is, under `ImageApp`).
+1. In that file, add the following line:
+
+`export const UNSPLASH_API_KEY = "YOUR KEY HERE"`
+
+IMPORTANT: The API Key only allows for 50 requests per hour. So, as fun as it is to search for images, keep it under that so your key doesn't get revoked :)
 
 C
 
